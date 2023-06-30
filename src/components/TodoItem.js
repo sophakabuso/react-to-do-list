@@ -2,26 +2,32 @@
 
 import React from 'react';
 
-const TodoItem = ({ todo, handlePriorityChange }) => {
-  const { id, title, completed, priority } = todo;
-
-  const setHighPriority = () => {
-    handlePriorityChange(id, 'High');
+function TodoItem({ todo, onDelete, onUpdatePriority, onUpdateTodo }) {
+  const handlePriorityChange = (e) => {
+    const priority = e.target.value;
+    onUpdatePriority(todo.id, priority);
   };
 
-  const setLowPriority = () => {
-    handlePriorityChange(id, 'Low');
+  const handleTextChange = (e) => {
+    const updatedText = e.target.value;
+    onUpdateTodo(todo.id, updatedText);
+  };
+
+  const handleDelete = () => {
+    onDelete(todo.id);
   };
 
   return (
-    <div>
-      <h3>{title}</h3>
-      <p>Completed: {completed ? 'Yes' : 'No'}</p>
-      <p>Priority: {priority}</p>
-      <button onClick={setHighPriority}>Set High Priority</button>
-      <button onClick={setLowPriority}>Set Low Priority</button>
+    <div className="todo-item">
+      <input type="text" value={todo.text} onChange={handleTextChange} />
+      <select value={todo.priority} onChange={handlePriorityChange}>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
-};
+}
 
 export default TodoItem;
