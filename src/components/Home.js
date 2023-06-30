@@ -7,11 +7,17 @@ import Select from 'react-select';
 import shortid from 'shortid';
 
 function Home({ searchTerm, setSearchTerm }) {
-  const [todos, setTodos] = useState([]);
+ // const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [filteredTodos, setFilteredTodos] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
+ const [todos, setTodos] = useState([
+    { id: 1, title: 'Learn React', completed: false },
+    { id: 2, title: 'Write code', completed: true },
+    { id: 3, title: 'Build a project', completed: false },
+  ]);
   const todoListRef = useRef(null);
 
   useEffect(() => {
@@ -124,7 +130,7 @@ function Home({ searchTerm, setSearchTerm }) {
         <button onClick={handleAddTodo}>Add</button>
       </div>
       <div className="search-bar">
-        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Search onSearch={handleSearch} />
         <button onClick={handleSearchPriority}>Search</button>
         <button onClick={handleResetSearch}>Reset</button>
       </div>

@@ -1,29 +1,39 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 
-const Search = ({ todos, setFilteredTodos }) => {
+function Search({ onSearch, todos }) {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    onSearch(searchTerm);
+  };
+
   const handlePriorityChange = (e) => {
-    const priority = e.target.value;
+    // Look here: Check if the `todos` variable is defined and accessible
+    console.log(todos);
 
-    if (priority === 'all') {
-      setFilteredTodos(todos);
-    } else {
-      const filtered = todos.filter((todo) => todo.priority === priority);
-      setFilteredTodos(filtered);
-    }
+    // Perform priority change logic
+    // ...
   };
 
   return (
-    <div>
-      <label htmlFor="priority">Filter by Priority:</label>
-      <select id="priority" onChange={handlePriorityChange}>
-        <option value="all">All</option>
+    <form className="search-form" onSubmit={handleSearch}>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search todos"
+      />
+      <button type="submit">Search</button>
+
+      <select onChange={handlePriorityChange}>
         <option value="high">High</option>
         <option value="medium">Medium</option>
         <option value="low">Low</option>
       </select>
-    </div>
+    </form>
   );
-};
+}
 
 export default Search;
