@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
 
+
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Registration from './components/Registration';
@@ -9,17 +9,11 @@ import Home from './components/Home';
 function App() {
   return (
     <Router>
-      <div>
+      <div className="app">
         <Switch>
-          <Route exact path="/">
-            <Login />
-          </Route>
-          <Route path="/registration">
-            <Registration />
-          </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
+          <Route exact path="/" component={Login} />
+          <Route path="/registration" component={Registration} />
+          <Route path="/home" component={Home} />
         </Switch>
       </div>
     </Router>
