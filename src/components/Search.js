@@ -1,38 +1,58 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function Search({ onSearch, todos }) {
-  const [searchTerm, setSearchTerm] = useState('');
+function Search({ todos = [], onDelete, onEdit }) {
+  const [selectedPriority, setSelectedPriority] = useState('');
+  const [filteredTodos, setFilteredTodos] = useState([]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    onSearch(searchTerm);
-  };
+  useEffect(() => {
+    setFilteredTodos(todos);
+  }, [todos]);
 
   const handlePriorityChange = (e) => {
-    // Look here: Check if the `todos` variable is defined and accessible
-    console.log(todos);
+    const priority = e.target.value;
+    setSelectedPriority(priority);
 
-    // Perform priority change logic
-    // ...
+    if (priority) {
+      const filtered = todos.filter((todo) => todo.priority === priority);
+      setFilteredTodos(filtered);
+    } else {
+      setFilteredTodos(todos);
+    }
+  };
+
+  const handleDelete = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setFilteredTodos(updatedTodos);
+    onDelete && onDelete(id);
+  };
+
+  const handleEdit = (id, newText) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, text: newText } : todo
+    );
+    setFilteredTodos(updatedTodos);
+    onEdit && onEdit(id, newText);
   };
 
   return (
-    <form className="search-form" onSubmit={handleSearch}>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search todos"
-      />
-      <button type="submit">Search</button>
-
-      <select onChange={handlePriorityChange}>
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
+    <div>
+      <select value={selectedPriority} onChange={handlePriorityChange}>
+        <option value="">Filter by Priority</option>
         <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
       </select>
-    </form>
+      <ul>
+        {filteredTodos.map((todo) => (
+          <li key={todo.id}>
+            {todo.text} (Priority: {todo.priority})
+            <button onClick={() => handleDelete(todo.id)}>Delete</button>
+            <button onClick={() => handleEdit(todo.id, 'Updated Text')}>Edit</button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

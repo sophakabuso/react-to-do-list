@@ -40,7 +40,6 @@ function Login() {
           className="input-field"
         />
         <button type="submit" className="login-button">Login</button>
-        
       </form>
     </div>
   );

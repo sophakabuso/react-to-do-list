@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 
-
 function Update({ todo, onUpdate, onCancel }) {
   const [updatedText, setUpdatedText] = useState(todo ? todo.text : '');
   const [updatedPriority, setUpdatedPriority] = useState(todo ? todo.priority : 'low');

@@ -1,141 +1,97 @@
 
-// src/components/Home.js
-import React, { useState, useRef, useEffect } from 'react';
+// Home.js
+import React, { useState, useEffect } from 'react';
 import TodoItem from './TodoItem';
 import Search from './Search';
-import Select from 'react-select';
-import shortid from 'shortid';
+import TodoList from './TodoList';
 
-function Home({ searchTerm, setSearchTerm }) {
- // const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState('');
-  const [selectedPriority, setSelectedPriority] = useState(null);
+function Home() {
+  const [todos, setTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
-
- const [todos, setTodos] = useState([
-    { id: 1, title: 'Learn React', completed: false },
-    { id: 2, title: 'Write code', completed: true },
-    { id: 3, title: 'Build a project', completed: false },
-  ]);
-  const todoListRef = useRef(null);
+  const [newTodo, setNewTodo] = useState('');
+  const [selectedPriority, setSelectedPriority] = useState('');
 
   useEffect(() => {
-    if (todoListRef.current) {
-      todoListRef.current.scrollTo(0, todoListRef.current.scrollHeight);
-    }
-  }, [filteredTodos]);
+    setFilteredTodos(todos);
+  }, [todos]);
 
   const handleAddTodo = () => {
-    if (newTodo.trim() !== '') {
-      const newTodoItem = {
-        id: shortid.generate(),
-        text: newTodo,
-        priority: selectedPriority ? selectedPriority.value : 'low',
-      };
+    if (newTodo.trim() === '') return;
 
-      setTodos((prevTodos) => [newTodoItem, ...prevTodos]);
-      setNewTodo('');
-      setSelectedPriority(null);
-      setFilteredTodos((prevFilteredTodos) => [newTodoItem, ...prevFilteredTodos]);
-    }
+    const todo = {
+      id: new Date().getTime().toString(),
+      text: newTodo,
+      priority: selectedPriority,
+    };
+
+    setTodos((prevTodos) => [...prevTodos, todo]);
+    setNewTodo('');
+    setSelectedPriority('');
   };
 
   const handleDeleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-    setFilteredTodos(filteredTodos.filter((todo) => todo.id !== id));
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
   const handleUpdatePriority = (id, priority) => {
     setTodos((prevTodos) =>
-      prevTodos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, priority };
-        }
-        return todo;
-      })
-    );
-    setFilteredTodos((prevFilteredTodos) =>
-      prevFilteredTodos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, priority };
-        }
-        return todo;
-      })
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, priority: priority } : todo
+      )
     );
   };
 
-  const handleUpdateTodo = (id, updatedText) => {
+  const handleUpdateTodo = (id, text) => {
     setTodos((prevTodos) =>
-      prevTodos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, text: updatedText };
-        }
-        return todo;
-      })
-    );
-    setFilteredTodos((prevFilteredTodos) =>
-      prevFilteredTodos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, text: updatedText };
-        }
-        return todo;
-      })
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, text: text } : todo
+      )
     );
   };
 
-  const handleSearchPriority = () => {
-    if (selectedPriority) {
-      const filtered = todos.filter((todo) => todo.priority === selectedPriority.value);
-      setFilteredTodos(filtered);
-    } else {
-      setFilteredTodos(todos);
-    }
+  const handleSearch = (searchTerm) => {
+    const filteredTodos = todos.filter((todo) =>
+      todo.text.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredTodos(filteredTodos);
+  };
+
+  const handleSearchPriority = (priority) => {
+    const filteredTodos = todos.filter((todo) => todo.priority === priority);
+    setFilteredTodos(filteredTodos);
   };
 
   const handleResetSearch = () => {
-    setSelectedPriority(null);
     setFilteredTodos(todos);
   };
 
-  const handleTextChange = (e) => {
-    setNewTodo(e.target.value);
-  };
-
-  const handlePriorityChange = (selectedOption) => {
-    setSelectedPriority(selectedOption);
-  };
-
   return (
-    <div className="home">
+    <div>
       <h1>Todo List</h1>
-      <div className="add-todo">
+      <div>
         <input
           type="text"
           value={newTodo}
-          onChange={handleTextChange}
-          placeholder="Add Todo..."
+          onChange={(e) => setNewTodo(e.target.value)}
+          placeholder="New Todo"
         />
-        <Select
-          className="select-priority"
-          options={[
-            { value: 'low', label: 'Low' },
-            { value: 'medium', label: 'Medium' },
-            { value: 'high', label: 'High' },
-          ]}
+        <select
           value={selectedPriority}
-          onChange={handlePriorityChange}
-          placeholder="Priority"
-        />
-        <button onClick={handleAddTodo}>Add</button>
+          onChange={(e) => setSelectedPriority(e.target.value)}
+        >
+          <option value="">Priority</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <button onClick={handleAddTodo}>Add Todo</button>
       </div>
-      <div className="search-bar">
-      <Search onSearch={handleSearch} />
-        <button onClick={handleSearchPriority}>Search</button>
-        <button onClick={handleResetSearch}>Reset</button>
+      <div>
+        <h2>Todos</h2>
+        <TodoList todos={filteredTodos} />
       </div>
-      <div className="todo-list" ref={todoListRef}>
-        {filteredTodos.map((todo) => (
+      <div>
+        {todos.map((todo) => (
           <TodoItem
             key={todo.id}
             todo={todo}
@@ -144,6 +100,13 @@ function Home({ searchTerm, setSearchTerm }) {
             onUpdateTodo={handleUpdateTodo}
           />
         ))}
+      </div>
+      <div>
+        <Search
+          onSearch={handleSearch}
+          onSearchPriority={handleSearchPriority}
+          onResetSearch={handleResetSearch}
+        />
       </div>
     </div>
   );
