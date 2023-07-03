@@ -1,6 +1,7 @@
 
 
-import React from 'react';
+import React, { useState } from 'react';
+import './App.css';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
@@ -28,4 +29,6 @@ function App() {
 }
 
 export default App;
+
+
 

@@ -4,42 +4,30 @@ const TodoForm = ({ onAdd }) => {
   const [title, setTitle] = useState('');
   const [priority, setPriority] = useState('');
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const handlePriorityChange = (event) => {
-    setPriority(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (title.trim() === '') {
-      return;
-    }
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const newTodo = {
-      id: Date.now().toString(),
-      title: title.trim(),
+      id: Date.now(),
+      title,
       priority,
+      completed: false,
     };
-
     onAdd(newTodo);
-
     setTitle('');
     setPriority('');
   };
 
+  const handlePriorityChange = (e) => {
+    setPriority(e.target.value);
+  };
+
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={title}
-        onChange={handleTitleChange}
-        placeholder="Enter Todo"
-      />
+      <label>Title</label>
+      <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+      <label>Priority</label>
       <select value={priority} onChange={handlePriorityChange}>
+        <option value="">Select Priority</option>
         <option value="High">High</option>
         <option value="Medium">Medium</option>
         <option value="Low">Low</option>
