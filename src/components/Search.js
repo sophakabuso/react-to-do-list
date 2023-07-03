@@ -1,22 +1,30 @@
 import React, { useState } from 'react';
 
 const Search = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedPriority, setSelectedPriority] = useState('');
 
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
+  const handlePriorityChange = (event) => {
+    setSelectedPriority(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onSearch(searchTerm);
+  const handleSearch = () => {
+    onSearch(selectedPriority);
   };
+  const handlePriorityChange = (event) => {
+    setSelectedPriority(event.target.value);
+  };
+  
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={searchTerm} onChange={handleChange} />
-      <button type="submit">Search</button>
-    </form>
+    <div>
+      <select value={selectedPriority} onChange={handlePriorityChange}>
+        <option value="">Select Priority</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+      <button onClick={handleSearch}>Search</button>
+    </div>
   );
 };
 
