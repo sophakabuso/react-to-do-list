@@ -1,43 +1,40 @@
-
-
 import React, { useState } from 'react';
 
-function Update({ todo, onUpdate, onCancel }) {
-  const [updatedText, setUpdatedText] = useState(todo ? todo.text : '');
-  const [updatedPriority, setUpdatedPriority] = useState(todo ? todo.priority : 'low');
+const Update = ({ todo, onUpdate }) => {
+  const [title, setTitle] = useState(todo.title);
+  const [priority, setPriority] = useState(todo.priority);
 
-  const handleTextChange = (e) => {
-    setUpdatedText(e.target.value);
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
   };
 
-  const handlePriorityChange = (e) => {
-    setUpdatedPriority(e.target.value);
+  const handlePriorityChange = (event) => {
+    setPriority(event.target.value);
   };
 
-  const handleUpdate = () => {
-    onUpdate(todo.id, updatedText, updatedPriority);
-  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  const handleCancel = () => {
-    onCancel();
-  };
+    const updatedTodo = {
+      ...todo,
+      title,
+      priority,
+    };
 
-  if (!todo) {
-    return null;
-  }
+    onUpdate(updatedTodo);
+  };
 
   return (
-    <div className="update">
-      <input type="text" value={updatedText} onChange={handleTextChange} />
-      <select value={updatedPriority} onChange={handlePriorityChange}>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={title} onChange={handleTitleChange} />
+      <select value={priority} onChange={handlePriorityChange}>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
       </select>
-      <button className="update-button" onClick={handleUpdate}>Update</button>
-      <button className="cancel-button" onClick={handleCancel}>Cancel</button>
-    </div>
+      <button type="submit">Update</button>
+    </form>
   );
-}
+};
 
 export default Update;
