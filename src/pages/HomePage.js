@@ -9,6 +9,7 @@ const HomePage = () => {
 
   const addTodo = (newTodo) => {
     setTodos([...todos, newTodo]);
+    setFilteredTodos([...todos, newTodo]); // Update filteredTodos when adding a new todo
   };
 
   const deleteTodo = (id) => {
