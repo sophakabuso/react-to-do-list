@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+This repository contains a simple Todo List web application built using React. The app allows users to manage their tasks and priorities by adding, editing, and deleting to-dos. It also includes a search feature to filter to-dos based on priority.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Features:
 
-## Available Scripts
+Navigation:
 
-In the project directory, you can run:
+The app uses React Router to navigate between different pages: Home, Login, and Register.
+The navigation menu is available at the top, providing links to these pages.
+Home Page:
 
-### `npm start`
+The home page (HomePage.js) displays a list of to-dos and provides options for managing them.
+The page header presents a title "To-Do List."
+Users can search for to-dos based on priority using the search bar.
+A form allows users to add new to-dos, specifying their task and priority.
+The list of to-dos is displayed, including options to edit or delete each to-do.
+To-Do Management:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To-dos are displayed as cards, showing their task description and priority level.
+Users can delete a to-do, which removes it from the list.
+Users can edit a to-do, allowing them to modify the task or priority.
+Priority Filtering:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The app allows users to filter to-dos based on their priority level.
+The search bar enables users to select a priority, and the to-dos are filtered accordingly.
+How to Use:
 
-### `npm test`
+Installation:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Clone the repository to your local machine.
+Run npm install to install the necessary dependencies.
+Running the App:
 
-### `npm run build`
+Run npm start to start the development server.
+The app will open in your default web browser at http://localhost:3000.
+Navigation:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Use the navigation menu to switch between pages: Home, Login, and Register.
+To-Do Management:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+On the Home page, you can see a list of to-dos.
+Use the search bar to filter to-dos based on priority.
+Add new to-dos using the form provided.
+Edit or delete existing to-dos using the options available on each card.
+Technologies Used:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+React: A JavaScript library for building user interfaces.
+React Router: A library for routing and navigation in React applications.
+Contributions:
+Contributions to the project are welcome! If you find any issues or would like to add enhancements, feel free to submit pull requests.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Please enjoy using the To-Do List app! If you have any questions or suggestions, feel free to reach out.
